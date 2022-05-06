@@ -1,0 +1,21 @@
+version: '3'
+services:
+  nextjs:
+    image: node:16
+    working_dir: /usr/src/app
+    ports:
+      - 80:3000
+    volumes:
+      - ./front/:/usr/src/app/
+    command: sh -c 'yarn install && yarn dev'
+  mysql:
+    image: mysql:8
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql/my.conf:/etc/mysql/conf.d/my.conf
+      - ./mysql/docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d/
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: test_database
+      TZ: Asia/Tokyo
